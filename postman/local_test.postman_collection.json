@@ -1,0 +1,30 @@
+{
+	"info": {
+		"_postman_id": "52383cd1-7f42-4974-acb8-93b537cfd9d2",
+		"name": "Local test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14905891"
+	},
+	"item": [
+		{
+			"name": "Winner interval",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{url}}:{{port}}/producers/winner-interval",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"producers",
+						"winner-interval"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
