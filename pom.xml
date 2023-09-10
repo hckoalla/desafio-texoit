@@ -38,6 +38,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${springframework.version}</version>
 		</dependency>
+		<!-- SPRING BOOT TEST SETUP -->
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-test</artifactId>
+	        <version>${springframework.version}</version>
+	    </dependency>
 		<!-- COMMONS CSV SETUP -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>

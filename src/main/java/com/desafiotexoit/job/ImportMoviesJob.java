@@ -30,8 +30,6 @@ public class ImportMoviesJob {
 
 	@PostConstruct
 	public void execute() throws IOException {
-		System.out.println("A classe foi executada após o início do projeto.");
-
 		// Read files in folder
 		List<MovieDTO> movies = new ArrayList<>();
 		Path folder = FileSystems.getDefault().getPath(definePath());
@@ -45,7 +43,6 @@ public class ImportMoviesJob {
 		for (MovieDTO dto : movies) {
 			movieService.createMovie(dto);
 		}
-		System.out.println("A classe foi executada após o início do projeto.");
 	}
 
 	private String definePath() {
