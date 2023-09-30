@@ -11,42 +11,26 @@ public interface ProducerRepository extends JpaRepository<Producer, Long> {
 
 	Producer findByName(String name);
 
-	@Query(nativeQuery = true, value ="SELECT producer_name as producer"
-			+ "			,followingWin"
-			+ "			,previousWin"
-			+ "			,followingWin - previousWin AS winInterval"
-			+ "		FROM ("
-			+ "			SELECT p.name AS producer_name"
-			+ "				,m.release_year AS followingWin"
-			+ "				,LAG(m.release_year) OVER ("
-			+ "					PARTITION BY p.id ORDER BY m.release_year"
-			+ "					) AS previousWin"
-			+ "			FROM producer p"
-			+ "			LEFT JOIN movie_producers mp ON mp.producers_id = p.id"
-			+ "			LEFT JOIN movie m ON mp.movies_id = m.id"
-			+ "			WHERE m.winner = true"
-			+ "			)"
-			+ "		WHERE previousWin IS NOT NULL"
-			+ "		ORDER BY winInterval ASC LIMIT 1")
+	@Query(nativeQuery = true, value ="SELECT wm.producer"
+			+ "	,wm.followingwin"
+			+ "	,wm.previouswin"
+			+ "	,wm.wininterval"
+			+ " FROM winner_interval wm"
+			+ " WHERE wm.wininterval = ("
+			+ "		SELECT min(wininterval)"
+			+ "		FROM winner_interval"
+			+ "		);")
 	List<WinnerIntervalProjection> findWinnerMinorInterval();
 
-	@Query(nativeQuery = true, value ="SELECT producer_name as producer"
-			+ "			,followingWin"
-			+ "			,previousWin"
-			+ "			,followingWin - previousWin AS winInterval"
-			+ "		FROM ("
-			+ "			SELECT p.name AS producer_name"
-			+ "				,m.release_year AS followingWin"
-			+ "				,LAG(m.release_year) OVER ("
-			+ "					PARTITION BY p.id ORDER BY m.release_year"
-			+ "					) AS previousWin"
-			+ "			FROM producer p"
-			+ "			LEFT JOIN movie_producers mp ON mp.producers_id = p.id"
-			+ "			LEFT JOIN movie m ON mp.movies_id = m.id"
-			+ "			WHERE m.winner = true"
-			+ "			)"
-			+ "		WHERE previousWin IS NOT NULL"
-			+ "		ORDER BY winInterval DESC LIMIT 1")
+	@Query(nativeQuery = true, value ="SELECT wm.producer"
+			+ "	,wm.followingwin"
+			+ "	,wm.previouswin"
+			+ "	,wm.wininterval"
+			+ " FROM winner_interval wm"
+			+ " WHERE wm.wininterval = ("
+			+ "		SELECT max(wininterval)"
+			+ "		FROM winner_interval"
+			+ "		)")
 	List<WinnerIntervalProjection> findWinnerMajorInterval();
 	
 }

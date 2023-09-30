@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.desafiotexoit.core.MovieService;
+import com.desafiotexoit.core.WinnerIntervalService;
 import com.desafiotexoit.dto.MovieDTO;
 
 @Component
@@ -27,6 +28,9 @@ public class ImportMoviesJob {
 
 	@Autowired
 	private MovieService movieService;
+
+	@Autowired
+	private WinnerIntervalService winnerIntervalService;
 
 	@PostConstruct
 	public void execute() throws IOException {
@@ -43,6 +47,9 @@ public class ImportMoviesJob {
 		for (MovieDTO dto : movies) {
 			movieService.createMovie(dto);
 		}
+
+		// Create View
+		winnerIntervalService.createView();
 	}
 
 	private String definePath() {
